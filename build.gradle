@@ -14,7 +14,7 @@ apply plugin: 'maven-publish'
 
 version = "1.0"
 group = 'org.manapart'
-archivesBaseName = 'horsestats'
+archivesBaseName = 'happystats'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
