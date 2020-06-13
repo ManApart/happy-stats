@@ -12,3 +12,13 @@ gradlew genIntellijRuns
 
 /recipe give <player> *
 
+
+## Ideas
+
+Breathing Mask
+Unlimited underwater breathing
+Same defense as turtle shell armor
+Uses
+Heart of the sea
+Water breathing potion
+Scute(helmet shape)
