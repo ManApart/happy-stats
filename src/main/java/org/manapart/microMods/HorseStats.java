@@ -1,4 +1,4 @@
-package org.manapart.horseStats;
+package org.manapart.microMods;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
@@ -7,25 +7,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-// The value here should match an entry in the META-INF/mods.toml file
-@Mod(HappyStats.MODID)
-@Mod.EventBusSubscriber(modid = HappyStats.MODID)
-public class HappyStats {
+public class HorseStats {
 
-    static final String MODID = "happystats";
-
-    public HappyStats() {
-        MinecraftForge.EVENT_BUS.register(this);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::getStats);
-    }
-
-    @SubscribeEvent
     public void getStats(PlayerInteractEvent.EntityInteract event) {
         if (event.getPlayer() != null && event.getWorld() != null && event.getTarget() instanceof AbstractHorseEntity) {
             PlayerEntity player = event.getPlayer();

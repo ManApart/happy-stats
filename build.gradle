@@ -14,7 +14,7 @@ apply plugin: 'maven-publish'
 
 version = "1.0"
 group = 'org.manapart'
-archivesBaseName = 'happystats'
+archivesBaseName = 'micromods'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
@@ -48,7 +48,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "HorseStats",
+            "Specification-Title": "MicroMods",
             "Specification-Vendor": "ManApart",
             "Specification-Version": "1",
             "Implementation-Title": project.name,
