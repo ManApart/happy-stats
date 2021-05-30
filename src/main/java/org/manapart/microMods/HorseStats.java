@@ -1,6 +1,6 @@
 package org.manapart.microMods;
 
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,7 +15,7 @@ public class HorseStats {
         if (event.getPlayer() != null && event.getWorld() != null && event.getTarget() instanceof AbstractHorseEntity) {
             PlayerEntity player = event.getPlayer();
             AbstractHorseEntity horseEntity = (AbstractHorseEntity) event.getTarget();
-            if (player.isCrouching() && player.getHeldItemMainhand().getItem() == Items.COMPASS) {
+            if (player.isCrouching() && player.getMainHandItem().getItem() == Items.COMPASS) {
                 event.setCanceled(true);
                 displayHorseStats(player, horseEntity);
             }
@@ -23,9 +23,9 @@ public class HorseStats {
     }
 
     private void displayHorseStats(PlayerEntity player, AbstractHorseEntity horseEntity) {
-        double health = horseEntity.getAttribute(SharedMonsterAttributes.MAX_HEALTH).getValue();
-        double speed = horseEntity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
-        double jump = horseEntity.getHorseJumpStrength();
+        double health = horseEntity.getAttributeValue(Attributes.MAX_HEALTH);
+        double speed = horseEntity.getAttributeValue(Attributes.MOVEMENT_SPEED);
+        double jump = horseEntity.getCustomJump();
 
         jump = -0.1817584952 * Math.pow(jump, 3) + 3.689713992 * Math.pow(jump, 2) + 2.128599134 * jump - 0.343930367; // https://minecraft.gamepedia.com/Horse
         speed = speed * 43;
@@ -114,12 +114,11 @@ public class HorseStats {
         slots = slots * 3;
 
         TextFormatting colourSlots = getSlotsColor(slots);
-
-        player.sendStatusMessage(new TranslationTextComponent(String.format("%sHealth: %.0f %sSpeed: %.1f %sChest Slots: %.0f", colourHealth, health, colourSpeed, speed, colourSlots, slots)), true);
+        player.displayClientMessage(new TranslationTextComponent(String.format("%sHealth: %.0f %sSpeed: %.1f %sChest Slots: %.0f", colourHealth, health, colourSpeed, speed, colourSlots, slots)), true);
     }
 
     private void displayHorseMessage(PlayerEntity player, TextFormatting colourSpeed, TextFormatting colourJump, double health, double speed, double jump, TextFormatting colourHealth) {
-        player.sendStatusMessage(new TranslationTextComponent(String.format("%sHealth: %.0f %sSpeed: %.1f %sJump Height: %.1f", colourHealth, health, colourSpeed, speed, colourJump, jump)), true);
+        player.displayClientMessage(new TranslationTextComponent(String.format("%sHealth: %.0f %sSpeed: %.1f %sJump Height: %.1f", colourHealth, health, colourSpeed, speed, colourJump, jump)), true);
     }
 
 }
