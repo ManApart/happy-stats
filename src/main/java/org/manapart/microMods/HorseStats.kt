@@ -39,72 +39,47 @@ class HorseStats {
     }
 
     private fun getHealthColor(health: Double): TextFormatting {
-        var color = TextFormatting.WHITE
-        if (health <= 20) {
-            color = TextFormatting.GRAY
-        } else if (health <= 23) {
-            color = TextFormatting.WHITE
-        } else if (health <= 26) {
-            color = TextFormatting.YELLOW
-        } else if (health <= 29) {
-            color = TextFormatting.AQUA
-        } else if (health <= Double.MAX_VALUE) {
-            color = TextFormatting.LIGHT_PURPLE
+        return when {
+            health <= 20.0 -> TextFormatting.GRAY
+            health <= 23.0 -> TextFormatting.WHITE
+            health <= 26.0 -> TextFormatting.YELLOW
+            health <= 29.0 -> TextFormatting.AQUA
+            else -> TextFormatting.LIGHT_PURPLE
         }
-        return color
     }
 
     private fun getSpeedColor(speed: Double): TextFormatting {
-        return if (speed <= 7) {
-            TextFormatting.GRAY
-        } else if (speed <= 9) {
-            TextFormatting.WHITE
-        } else if (speed <= 11) {
-            TextFormatting.YELLOW
-        } else if (speed <= 13) {
-            TextFormatting.AQUA
-        } else if (speed <= Double.MAX_VALUE) {
-            TextFormatting.LIGHT_PURPLE
-        } else {
-            TextFormatting.LIGHT_PURPLE
+       return when {
+            speed <= 7 -> TextFormatting.GRAY
+            speed <= 9 -> TextFormatting.WHITE
+            speed <= 11 -> TextFormatting.YELLOW
+            speed <= 13 -> TextFormatting.AQUA
+            else -> TextFormatting.LIGHT_PURPLE
         }
     }
 
     private fun getJumpColor(jump: Double): TextFormatting {
-        return if (jump <= 1.50) {
-            TextFormatting.GRAY
-        } else if (jump <= 2.0) {
-            TextFormatting.WHITE
-        } else if (jump <= 3.0) {
-            TextFormatting.YELLOW
-        } else if (jump <= 4.0) {
-            TextFormatting.AQUA
-        } else if (jump <= Double.MAX_VALUE) {
-            TextFormatting.LIGHT_PURPLE
-        } else {
-            TextFormatting.WHITE
+         return when {
+             jump <= 1.50 -> TextFormatting.GRAY
+             jump <= 2.0 -> TextFormatting.WHITE
+             jump <= 3.0 -> TextFormatting.YELLOW
+             jump <= 4.0 -> TextFormatting.AQUA
+            else -> TextFormatting.LIGHT_PURPLE
         }
     }
 
     private fun getSlotsColor(slots: Double): TextFormatting {
-        return if (slots <= 3) {
-            TextFormatting.GRAY
-        } else if (slots <= 6) {
-            TextFormatting.WHITE
-        } else if (slots <= 9) {
-            TextFormatting.YELLOW
-        } else if (slots <= 12) {
-            TextFormatting.AQUA
-        } else if (slots <= Double.MAX_VALUE) {
-            TextFormatting.LIGHT_PURPLE
-        } else {
-            TextFormatting.WHITE
+        return when {
+            slots <= 3.0 -> TextFormatting.GRAY
+            slots <= 6.0 -> TextFormatting.WHITE
+            slots <= 9.0 -> TextFormatting.YELLOW
+            slots <= 12.0 -> TextFormatting.AQUA
+            else -> TextFormatting.LIGHT_PURPLE
         }
     }
 
     private fun displayLlamaMessage(player: PlayerEntity, horseEntity: LlamaEntity, colourHealth: TextFormatting, colourSpeed: TextFormatting, health: Double, speed: Double) {
-        var slots = horseEntity.strength.toDouble()
-        slots *= 3
+        val slots = horseEntity.strength.toDouble() * 3
         val colourSlots = getSlotsColor(slots)
         player.displayClientMessage(TranslationTextComponent(String.format("%sHealth: %.0f %sSpeed: %.1f %sChest Slots: %.0f", colourHealth, health, colourSpeed, speed, colourSlots, slots)), true)
     }

@@ -5,6 +5,7 @@ import net.minecraftforge.fml.common.Mod
 import thedarkcolour.kotlinforforge.forge.FORGE_BUS
 
 const val MODID = "micromods"
+
 @Mod(MODID)
 object MicroMods {
     private val stats = HorseStats()
