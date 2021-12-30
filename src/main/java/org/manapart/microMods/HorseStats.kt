@@ -1,20 +1,20 @@
 package org.manapart.microMods
 
-import net.minecraft.entity.ai.attributes.Attributes
-import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract
-import net.minecraft.entity.passive.horse.AbstractHorseEntity
-import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.util.text.TextFormatting
-import net.minecraft.entity.passive.horse.LlamaEntity
-import net.minecraft.item.Items
-import net.minecraft.util.text.TranslationTextComponent
+import net.minecraft.network.chat.FormattedText
+import net.minecraft.world.entity.animal.horse.AbstractHorse
+import net.minecraft.world.entity.animal.horse.Llama
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Items
+import net.minecraftforge.event.entity.player.PlayerInteractEvent
+import net.minecraftforge.internal.TextComponentMessageFormatHandler
 import kotlin.math.pow
 
+
 class HorseStats {
-    fun getStats(event: EntityInteract) {
-        if (event.player != null && event.world != null && event.target is AbstractHorseEntity) {
+    fun getStats(event: PlayerInteractEvent.EntityInteract) {
+        if (event.player != null && event.world != null && event.target is AbstractHorse) {
             val player = event.player
-            val horseEntity = event.target as AbstractHorseEntity
+            val horseEntity = event.target as AbstractHorse
             if (player.isCrouching && player.mainHandItem.item === Items.COMPASS) {
                 event.isCanceled = true
                 displayHorseStats(player, horseEntity)
@@ -22,7 +22,7 @@ class HorseStats {
         }
     }
 
-    private fun displayHorseStats(player: PlayerEntity, horseEntity: AbstractHorseEntity) {
+    private fun displayHorseStats(player: Player, horseEntity: AbstractHorse) {
         val health = horseEntity.getAttributeValue(Attributes.MAX_HEALTH)
         var speed = horseEntity.getAttributeValue(Attributes.MOVEMENT_SPEED)
         var jump = horseEntity.customJump
@@ -31,7 +31,7 @@ class HorseStats {
         val colourHealth = getHealthColor(health)
         val colourSpeed = getSpeedColor(speed)
         val colourJump = getJumpColor(jump)
-        if (horseEntity is LlamaEntity) {
+        if (horseEntity is Llama) {
             displayLlamaMessage(player, horseEntity, colourHealth, colourSpeed, health, speed)
         } else {
             displayHorseMessage(player, colourSpeed, colourJump, health, speed, jump, colourHealth)
@@ -78,13 +78,13 @@ class HorseStats {
         }
     }
 
-    private fun displayLlamaMessage(player: PlayerEntity, horseEntity: LlamaEntity, colourHealth: TextFormatting, colourSpeed: TextFormatting, health: Double, speed: Double) {
+    private fun displayLlamaMessage(player: Player, horseEntity: Llama, colourHealth: TextFormatting, colourSpeed: TextFormatting, health: Double, speed: Double) {
         val slots = horseEntity.strength.toDouble() * 3
         val colourSlots = getSlotsColor(slots)
         player.displayClientMessage(TranslationTextComponent(String.format("%sHealth: %.0f %sSpeed: %.1f %sChest Slots: %.0f", colourHealth, health, colourSpeed, speed, colourSlots, slots)), true)
     }
 
-    private fun displayHorseMessage(player: PlayerEntity, colourSpeed: TextFormatting, colourJump: TextFormatting, health: Double, speed: Double, jump: Double, colourHealth: TextFormatting) {
+    private fun displayHorseMessage(player: Player, colourSpeed: TextFormatting, colourJump: TextFormatting, health: Double, speed: Double, jump: Double, colourHealth: TextFormatting) {
         player.displayClientMessage(TranslationTextComponent(String.format("%sHealth: %.0f %sSpeed: %.1f %sJump Height: %.1f", colourHealth, health, colourSpeed, speed, colourJump, jump)), true)
     }
 }
