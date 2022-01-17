@@ -1,9 +1,9 @@
 package org.manapart.microMods
 
-import javafx.scene.paint.Color.AQUA
-import net.minecraft.network.chat.Style
-import net.minecraft.network.chat.TextColor
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.chat.TextComponent
+import net.minecraft.network.chat.TranslatableComponent
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.animal.horse.AbstractHorse
 import net.minecraft.world.entity.animal.horse.Llama
@@ -41,31 +41,45 @@ class HorseStats {
         }
     }
 
-    private fun getHealthColor(health: Double): TextColor = getColor(health, listOf(20,23,26,29))
-    private fun getSpeedColor(speed: Double): TextColor = getColor(speed, listOf(7, 9, 11, 13))
-    private fun getJumpColor(jump: Double): TextColor = getColor(jump, listOf(1, 2, 3, 4))
-    private fun getSlotsColor(slots: Double): TextColor = getColor(slots, listOf(3, 6, 9, 12))
+    private fun getHealthColor(health: Double): ChatFormatting = getColor(health, listOf(20, 23, 26, 29))
+    private fun getSpeedColor(speed: Double): ChatFormatting = getColor(speed, listOf(7, 9, 11, 13))
+    private fun getJumpColor(jump: Double): ChatFormatting = getColor(jump, listOf(1, 2, 3, 4))
+    private fun getSlotsColor(slots: Double): ChatFormatting = getColor(slots, listOf(3, 6, 9, 12))
 
 
-    private fun getColor(amount: Double, options: List<Int>): TextColor {
+    private fun getColor(amount: Double, options: List<Int>): ChatFormatting {
         val intAmount = amount.toInt()
         return when {
-            intAmount<= options[0] -> TextColor.parseColor("gray")
-            intAmount <= options[1] -> TextColor.parseColor("white")
-            intAmount <= options[2] -> TextColor.parseColor("yellow")
-            intAmount <= options[3] -> TextColor.parseColor("aqua")
-            else -> TextColor.parseColor("light_purple")
-        }!!
+            intAmount <= options[0] -> ChatFormatting.GRAY
+            intAmount <= options[1] -> ChatFormatting.WHITE
+            intAmount <= options[2] -> ChatFormatting.YELLOW
+            intAmount <= options[3] -> ChatFormatting.AQUA
+            else -> ChatFormatting.LIGHT_PURPLE
+        }
     }
 
-    private fun displayLlamaMessage(player: Player, horseEntity: Llama, colourHealth: TextColor, colourSpeed: TextColor, health: Double, speed: Double) {
+    private fun displayLlamaMessage(player: Player, horseEntity: Llama, colourHealth: ChatFormatting, colourSpeed: ChatFormatting, health: Double, speed: Double) {
         val slots = horseEntity.strength.toDouble() * 3
         val colourSlots = getSlotsColor(slots)
-        player.displayClientMessage(TextComponent(String.format("%sHealth: %.0f %sSpeed: %.1f %sChest Slots: %.0f", colourHealth, health, colourSpeed, speed, colourSlots, slots)), true)
+        val message = TextComponent("")
+            .append("Health: %.0f".formatted(health, colourHealth))
+            .append(" Speed: %.1f".formatted(speed, colourSpeed))
+            .append(" Chest Slots: %.1f".formatted(slots, colourSlots))
+
+        player.displayClientMessage(message, true)
     }
 
-    private fun displayHorseMessage(player: Player, colourSpeed: TextColor, colourJump: TextColor, health: Double, speed: Double, jump: Double, colourHealth: TextColor) {
-        //Not enough energy to re figure out how to color the text
-        player.displayClientMessage(TextComponent(String.format("Health: %.0f Speed: %.1f Jump Height: %.1f", health, speed, jump)), true)
+    private fun displayHorseMessage(player: Player, colourSpeed: ChatFormatting, colourJump: ChatFormatting, health: Double, speed: Double, jump: Double, colourHealth: ChatFormatting) {
+
+        val message = TextComponent("")
+            .append("Health: %.0f".formatted(health, colourHealth))
+            .append(" Speed: %.1f".formatted(speed, colourSpeed))
+            .append(" Jump Height: %.1f".formatted(jump, colourJump))
+
+        player.displayClientMessage(message, true)
+    }
+
+    private fun String.formatted(amount: Double, color: ChatFormatting): MutableComponent{
+        return TranslatableComponent(String.format(this, amount)).withStyle(color)
     }
 }
