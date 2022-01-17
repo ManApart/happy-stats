@@ -12,3 +12,7 @@ gradlew genIntellijRuns
 
 /recipe give <player> *
 
+## MCP Mappings
+```
+!mcp -u TextFormatting 1.18.1
+```
