@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:firework_rocket"
+    },
+    {
+      "item": "minecraft:elytra"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    }
+  ],
+  "result": {
+    "item": "micromods:rocketitem",
+    "count": 1
+  }
+}
