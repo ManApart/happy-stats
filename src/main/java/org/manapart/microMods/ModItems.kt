@@ -8,6 +8,6 @@ object ModItems {
     val REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, MODID)
 
     val TELEPORT_ITEM by REGISTRY.registerObject("rocketitem") {
-        RocketItem()
+        RocketItem(1)
     }
 }
