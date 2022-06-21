@@ -1,15 +1,17 @@
 package org.manapart.microMods
 
 import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
-import net.minecraft.network.chat.TextComponent
-import net.minecraft.network.chat.TranslatableComponent
+//import net.minecraft.network.chat.TextComponent
+//import net.minecraft.network.chat.TranslatableComponent
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.animal.horse.AbstractHorse
 import net.minecraft.world.entity.animal.horse.Llama
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Items
 import net.minecraftforge.event.entity.player.PlayerInteractEvent
+import java.awt.TextComponent
 import kotlin.math.pow
 
 
@@ -61,25 +63,25 @@ class HorseStats {
     private fun displayLlamaMessage(player: Player, horseEntity: Llama, colourHealth: ChatFormatting, colourSpeed: ChatFormatting, health: Double, speed: Double) {
         val slots = horseEntity.strength.toDouble() * 3
         val colourSlots = getSlotsColor(slots)
-        val message = TextComponent("")
-            .append("Health: %.0f".formatted(health, colourHealth))
-            .append(" Speed: %.1f".formatted(speed, colourSpeed))
-            .append(" Chest Slots: %.1f".formatted(slots, colourSlots))
-
-        player.displayClientMessage(message, true)
+//        val message = MutableComponent("")
+//            .append("Health: %.0f".formatted(health, colourHealth))
+//            .append(" Speed: %.1f".formatted(speed, colourSpeed))
+//            .append(" Chest Slots: %.1f".formatted(slots, colourSlots))
+//
+//        player.displayClientMessage(message, true)
     }
 
     private fun displayHorseMessage(player: Player, colourSpeed: ChatFormatting, colourJump: ChatFormatting, health: Double, speed: Double, jump: Double, colourHealth: ChatFormatting) {
 
-        val message = TextComponent("")
-            .append("Health: %.0f".formatted(health, colourHealth))
-            .append(" Speed: %.1f".formatted(speed, colourSpeed))
-            .append(" Jump Height: %.1f".formatted(jump, colourJump))
-
-        player.displayClientMessage(message, true)
+//        val message = TextComponent("")
+//            .append("Health: %.0f".formatted(health, colourHealth))
+//            .append(" Speed: %.1f".formatted(speed, colourSpeed))
+//            .append(" Jump Height: %.1f".formatted(jump, colourJump))
+//
+//        player.displayClientMessage(message, true)
     }
 
-    private fun String.formatted(amount: Double, color: ChatFormatting): MutableComponent{
-        return TranslatableComponent(String.format(this, amount)).withStyle(color)
-    }
+//    private fun String.formatted(amount: Double, color: ChatFormatting): MutableComponent{
+//        return TranslatableComponent(String.format(this, amount)).withStyle(color)
+//    }
 }
