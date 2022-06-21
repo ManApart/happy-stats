@@ -12,6 +12,8 @@ import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 
 class RocketItem(coolDownTimeInSeconds: Int): FireworkRocketItem(Properties().tab(ItemGroupMM.instance)) {
+    private val coolDown = coolDownTimeInSeconds * 1000
+    private var lastUsed = System.currentTimeMillis()
     override fun useOn(p_41216_: UseOnContext): InteractionResult {
         return InteractionResult.sidedSuccess(p_41216_.level.isClientSide)
     }
@@ -20,9 +22,13 @@ class RocketItem(coolDownTimeInSeconds: Int): FireworkRocketItem(Properties().ta
         return if (player.isFallFlying) {
             val itemstack = player.getItemInHand(p_41220_)
             if (!p_41218_.isClientSide) {
-                val fireworkrocketentity = FireworkRocketEntity(p_41218_, itemstack, player)
-                p_41218_.addFreshEntity(fireworkrocketentity)
-                player.awardStat(Stats.ITEM_USED[this])
+                val now = System.currentTimeMillis()
+                if (now > lastUsed + coolDown) {
+                    lastUsed = now
+                    val fireworkrocketentity = FireworkRocketEntity(p_41218_, itemstack, player)
+                    p_41218_.addFreshEntity(fireworkrocketentity)
+                    player.awardStat(Stats.ITEM_USED[this])
+                }
             }
             InteractionResultHolder.sidedSuccess(player.getItemInHand(p_41220_), p_41218_.isClientSide())
         } else {
