@@ -6,12 +6,13 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.projectile.FireworkRocketEntity
+import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.FireworkRocketItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 
-class RocketItem(coolDownTimeInSeconds: Int): FireworkRocketItem(Properties().tab(ItemGroupMM.instance)) {
+class RocketItem(coolDownTimeInSeconds: Int): FireworkRocketItem(Properties().tab(CreativeModeTab.TAB_MISC)) {
     private val coolDown = coolDownTimeInSeconds * 1000
     private var lastUsed = System.currentTimeMillis()
     override fun useOn(p_41216_: UseOnContext): InteractionResult {
