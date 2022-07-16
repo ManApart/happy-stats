@@ -18,6 +18,11 @@ group = 'org.manapart'
 archivesBaseName = 'micromods'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+tasks {
+    compileKotlin {
+        kotlinOptions.jvmTarget = "17"
+    }
+}
 
 minecraft {
     mappings channel: 'official', version: minecraft_version

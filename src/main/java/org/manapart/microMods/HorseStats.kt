@@ -1,7 +1,5 @@
 package org.manapart.microMods
 
-//import net.minecraft.network.chat.TextComponent
-//import net.minecraft.network.chat.TranslatableComponent
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
@@ -17,8 +15,8 @@ import kotlin.math.pow
 
 class HorseStats {
     fun getStats(event: PlayerInteractEvent.EntityInteract) {
-        if (event.player != null && event.world != null && event.target is AbstractHorse) {
-            val player = event.player
+        if (event.entity != null && event.level != null && event.target is AbstractHorse) {
+            val player = event.entity
             val horseEntity = event.target as AbstractHorse
             if (player.isCrouching && player.mainHandItem.item === Items.COMPASS) {
                 event.isCanceled = true
